@@ -5,22 +5,23 @@ import '../model/todo.dart';
 
 
 class edit_task extends StatelessWidget {
-  ToDo todo;
+  final ToDo todo;
   //TextEditingController todo2Controller = TextEditingController();
 
   edit_task({Key? key, required this.todo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Task Manager',
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
+    //return MaterialApp(
+    //  title: 'Task Manager',
+    //  theme: ThemeData(
+    //    primarySwatch: Colors.deepPurple,
         //fontFamily: 'SF Pro Display',
-      ),
-      home:  EditTaskScreen(todo: todo),
-      debugShowCheckedModeBanner: false,
-    );
+    //  ),
+    //  home:  EditTaskScreen(todo: todo),
+    //  debugShowCheckedModeBanner: false,
+   // );
+    return EditTaskScreen(todo: todo);
   }
 }
 
@@ -96,7 +97,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                     child: IconButton(
                       icon: const Icon(Icons.arrow_back, color: Color(0xFF6949FF)),
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                        Navigator.pop(context, todo);
                       },
                     ),
                   ),
@@ -370,9 +371,15 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            todo.setTitle(_titleController.text);
-                            todo.title = _titleController.text;
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                            
+                            setState(() {
+                              todo.title = _titleController.text;
+                              todo.description = _descriptionController.text;
+                            });
+                            Navigator.pop(context, todo);
+                            //todo.setTitle(_titleController.text);
+                            //todo.title = _titleController.text;
+                            //Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF6949FF),

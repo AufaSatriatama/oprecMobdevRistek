@@ -16,7 +16,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final todosList = ToDo.todoList();
+  final _todoManager = ToDoManager();
+  late List<ToDo> todosList;
   final _todoController = TextEditingController();
   List<ToDo> _foundToDo = [];
   //final _todoController = TextEditingController();
@@ -40,8 +41,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    _foundToDo = todosList;
+    //_foundToDo = todosList;
     super.initState();
+    _todoManager.initTodos();
+    todosList = _todoManager.getTodos();
+    _foundToDo = todosList;
   }
 
   @override
@@ -187,7 +191,7 @@ class _dailyTaskListState extends State<dailyTaskList> {
 }
 
 class dailyTaskTitle extends StatelessWidget {
-  int selectedIndex = 0;
+  //int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -208,8 +212,23 @@ class dailyTaskTitle extends StatelessWidget {
           ),
           ElevatedButton(
             
-            onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => create_task()));
+            onPressed: () async{
+              final result = await Navigator.push(
+                context, 
+                MaterialPageRoute(builder: (context) => create_task())
+              );
+
+              if (result != null && result is ToDo) {
+                final homeState = context.findAncestorStateOfType<_HomeScreenState>();
+                if (homeState != null) {
+                  homeState.setState(() {
+                    homeState.todosList.add(result);
+                    homeState._foundToDo = homeState.todosList;
+                  });
+                }
+              }
+              
+              //Navigator.push(context, MaterialPageRoute(builder: (context) => create_task()));
             }, 
               style: ElevatedButton.styleFrom(
                 

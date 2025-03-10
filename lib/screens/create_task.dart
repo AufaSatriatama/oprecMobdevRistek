@@ -10,14 +10,19 @@ class create_task extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Task Manager',
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
+    //return MaterialApp(
+      //title: 'Task Manager',
+      //theme: ThemeData(
+        //primarySwatch: Colors.deepPurple,
         //fontFamily: 'SF Pro Display',
-      ),
-      home: const AddTaskScreen(),
-      debugShowCheckedModeBanner: false,
+      //),
+      //home: const AddTaskScreen(),
+      //debugShowCheckedModeBanner: false,
+    //);
+
+    return Scaffold(
+      backgroundColor: const Color(0xFF6A3DE8),
+      body: const AddTaskScreen(),
     );
   }
 }
@@ -37,17 +42,19 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     text: null
   );
   String selectedCategory = "Daily Task";
+  ToDo todosList = ToDo(id: '01', todoText: 'Morning Excercise', description:"", isDone: true );
 
-  final todosList = ToDo.todoList();
+  //List<ToDo> todosList = ToDo.todoList;
+  //List<ToDo> list = ToDo.todoList();
   List<ToDo> _foundToDo = [];
   final _todoController = TextEditingController();
   //final _titleController = TextEditingController();
 
   @override
-  void initState() {
-    _foundToDo = todosList;
-    super.initState();
-  }
+  //void initState() {
+    //_foundToDo = todosList;
+    //super.initState();
+  //}
 
     //void _addToDoItem(String toDo) {
     //setState(() {
@@ -80,7 +87,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     child: IconButton(
                       icon: const Icon(Icons.arrow_back, color: Color(0xFF6949FF)),
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                        Navigator.of(context).pop();
+                        //Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
                       },
                     ),
                   ),
@@ -380,8 +388,16 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-                            _addToDoItem(_titleController.text, _descriptionController.text);
+                            if (_titleController.text.isNotEmpty){
+                              final newTodo = ToDo(
+                                id: DateTime.now().millisecondsSinceEpoch.toString(), 
+                                todoText: _titleController.text,
+                                description: _descriptionController.text,
+                                isDone: false,
+                                
+                                );
+                              Navigator.of(context).pop(newTodo);
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF6949FF),
@@ -395,6 +411,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
+                              color: Colors.white,
                             ),
                           ),
                         ),
@@ -411,12 +428,16 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   }
 
   void _addToDoItem(String title, String description) {
-    setState(() {
-        todosList.add(ToDo(id: DateTime.now().millisecondsSinceEpoch.toString(), todoText: title, description: description),
-      );  
-    });
+    final newTodo = ToDo(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      todoText: title,
+      description: description,
+      isDone: false,
+      isPriority: selectedCategory == "Priority Task"
+    );
     
-
-  }
+    // Return the new todo to HomeScreen
+    Navigator.pop(context, newTodo);
+    }
  
 }

@@ -6,7 +6,7 @@ import '../model/todo.dart';
 
 class edit_task extends StatelessWidget {
   ToDo todo;
-  //TextEditingController todoController = TextEditingController();
+  //TextEditingController todo2Controller = TextEditingController();
 
   edit_task({Key? key, required this.todo}) : super(key: key);
 
@@ -49,13 +49,13 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   @override
   void initState() {
     super.initState();
-    // Inisialisasi todo dari widget
+    // Inisialisasi todo2 dari widget
     todo = widget.todo;
     title = todo.getText();
     desc = todo.getDescription();
     isDone = todo.isDone;
 
-    // Inisialisasi controller dengan data dari todo
+    // Inisialisasi controller dengan data dari todo2
     _titleController = TextEditingController(text: title);
     _descriptionController = TextEditingController(text: desc);
   }
@@ -387,6 +387,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
+                              color: Colors.white,
                             ),
                           ),
                         ),

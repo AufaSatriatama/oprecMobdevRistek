@@ -23,17 +23,22 @@ class _HomeScreenState extends State<HomeScreen> {
   //final _todoController = TextEditingController();
 
   void _navigateAndSendData(ToDo todo) async {
-    final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => edit_task(todo: todo)));
-   
+    //final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => edit_task(todo: todo)));
+   final result = await Navigator.push(
+    context, 
+    MaterialPageRoute(builder: (context) => edit_task(todo: todo)));
 
     if (result != null && result is ToDo) {
       setState(() {
       final index = todosList.indexWhere((item) => item.id == result.id);
       if (index != -1) {
         todosList[index] = result;
-        _foundToDo = todosList;
+        _foundToDo = List.from(todosList);
+        //_foundToDo = todosList;
+        _todoManager.updateTodo(result);
       }
       });
+      
     }
     
   }
@@ -45,7 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _todoManager.initTodos();
     todosList = _todoManager.getTodos();
-    _foundToDo = todosList;
+    _foundToDo = List.from(todosList);
+    //_foundToDo = todosList;
   }
 
   @override
@@ -108,9 +114,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _handleToDoChange(ToDo todo) {
-    setState(() {
+    //setState(() {
       //todo.isDone = !todo.isDone;
-    });
+    //});
+    _navigateAndSendData(todo);
+
   }
 
   void _deleteToDoItem(String id) {

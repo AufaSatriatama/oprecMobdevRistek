@@ -19,6 +19,25 @@ class ToDo {
     //this.isN = false,
   });
 
+  ToDo copyWith({
+    String? todoText,
+    String? description,
+    bool? isPriority,
+  }) {
+    return ToDo(
+      id: this.id,
+      todoText: todoText ?? this.todoText,
+      description: description ?? this.description,
+      isPriority: isPriority ?? this.isPriority,
+    );
+  }
+
+  void updateTodo(String newTitle, String newDescription, bool newPriority) {
+    todoText = newTitle;
+    description = newDescription;
+    isPriority = newPriority;
+  }
+
   String getText(){
     return this.todoText!;
   }
@@ -47,6 +66,13 @@ class ToDo {
 class ToDoManager {
   // Variabel private untuk menyimpan list ToDo
   List<ToDo> _todos = [];
+
+  void updateTodo(ToDo updatedTodo){
+    final index = _todos.indexWhere((item) => item.id == updatedTodo.id);
+    if (index != -1) {
+      _todos[index] = updatedTodo.copyWith();
+    }
+  }
 
   // Method untuk menginisialisasi list ToDo
   void initTodos() {

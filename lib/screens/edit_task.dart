@@ -40,8 +40,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   bool isPriority = false;
 
   // Deklarasikan controller tanpa inisialisasi
-  late final TextEditingController _titleController;
-  late final TextEditingController _descriptionController;
+  late TextEditingController _titleController;
+  late TextEditingController _descriptionController;
 
   DateTime startDate = DateTime(2022, 2, 21);
   DateTime endDate = DateTime(2022, 3, 3);
@@ -57,8 +57,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
     isPriority = todo.isPriority;
 
     // Inisialisasi controller dengan data dari todo2
-    _titleController = TextEditingController(text: title);
-    _descriptionController = TextEditingController(text: desc);
+    _titleController = TextEditingController(text: todo.todoText);
+    _descriptionController = TextEditingController(text: todo.description);
   }
 
   @override
@@ -97,7 +97,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                     child: IconButton(
                       icon: const Icon(Icons.arrow_back, color: Color(0xFF6949FF)),
                       onPressed: () {
-                        Navigator.pop(context, todo);
+                        Navigator.pop(context);
+                        Navigator.of(context).pop(todo);
                       },
                     ),
                   ),
@@ -372,11 +373,19 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             
-                            setState(() {
-                              todo.title = _titleController.text;
-                              todo.description = _descriptionController.text;
-                            });
-                            Navigator.pop(context, todo);
+                            final updateTodo = ToDo(
+                              id: todo.id,
+                              todoText: _titleController.text,
+                              description: _descriptionController.text,
+                              isPriority: todo.isPriority,
+                            );
+
+                            //setState(() {
+                            //  todo.title = _titleController.text;
+                            //  todo.description = _descriptionController.text;
+                            //});
+                            Navigator.pop(context);
+                            Navigator.of(context).pop(updateTodo);
                             //todo.setTitle(_titleController.text);
                             //todo.title = _titleController.text;
                             //Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));

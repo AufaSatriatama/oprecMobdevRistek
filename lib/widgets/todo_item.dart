@@ -28,6 +28,7 @@ class ToDoItem extends StatelessWidget {
       child: ListTile(
         
         onTap: () {
+          onToDoChanged(todo);
           // print('Clicked on Todo Item.');
           Navigator.push(context, MaterialPageRoute(builder: (context) => edit_task(todo: todo)));
         },

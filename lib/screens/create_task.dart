@@ -42,12 +42,13 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     text: null
   );
   String selectedCategory = "Daily Task";
-  ToDo todosList = ToDo(id: '01', todoText: 'Morning Excercise', description:"", isDone: true );
+  ToDo todosList = ToDo(id: '01', todoText: 'Morning Excercise', description:"", isPriority: true );
 
   //List<ToDo> todosList = ToDo.todoList;
   //List<ToDo> list = ToDo.todoList();
   List<ToDo> _foundToDo = [];
   final _todoController = TextEditingController();
+  var priority = false;
   //final _titleController = TextEditingController();
 
   @override
@@ -339,6 +340,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                         ? Colors.white 
                                         : Colors.black87,
                                     fontWeight: FontWeight.w500,
+                                    
                                   ),
                                 ),
                               ),
@@ -389,13 +391,20 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           onPressed: () {
                             
                             if (_titleController.text.isNotEmpty){
+                              if (selectedCategory == "Priority Task") {
+                                priority = true;
+                              }else{
+                                priority = false;
+                              }
                               final newTodo = ToDo(
                                 id: DateTime.now().millisecondsSinceEpoch.toString(), 
                                 todoText: _titleController.text,
                                 description: _descriptionController.text,
-                                isDone: false,
+                                isPriority: priority,
                                 
                                 );
+
+                            
                               Navigator.of(context).pop(newTodo);
                             }
                           },
@@ -432,8 +441,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       todoText: title,
       description: description,
-      isDone: false,
-      isPriority: selectedCategory == "Priority Task"
+      //isPriority: false,
+      //isPriority: selectedCategory == "Priority Task"
     );
     
     // Return the new todo to HomeScreen

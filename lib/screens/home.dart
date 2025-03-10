@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _handleToDoChange(ToDo todo) {
     setState(() {
-      todo.isDone = !todo.isDone;
+      //todo.isDone = !todo.isDone;
     });
   }
 

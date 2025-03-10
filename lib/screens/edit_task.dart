@@ -37,7 +37,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   late ToDo todo;
   String title = "";
   String desc = "";
-  bool isDone = false;
+  bool isPriority = false;
 
   // Deklarasikan controller tanpa inisialisasi
   late final TextEditingController _titleController;
@@ -54,7 +54,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
     todo = widget.todo;
     title = todo.getText();
     desc = todo.getDescription();
-    isDone = todo.isDone;
+    isPriority = todo.isPriority;
 
     // Inisialisasi controller dengan data dari todo2
     _titleController = TextEditingController(text: title);

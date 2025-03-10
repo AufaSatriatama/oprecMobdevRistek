@@ -8,15 +8,15 @@ class ToDo {
   String id;
   String todoText;
   String description;
-  bool isDone;
   bool isPriority;
+  //bool isN;
   
   ToDo({
     required this.id,
     required this.todoText,
     this.description = '',
-    this.isDone = false,
     this.isPriority = false,
+    //this.isN = false,
   });
 
   String getText(){
@@ -24,7 +24,7 @@ class ToDo {
   }
 
   bool status(){
-    return isDone;
+    return isPriority;
   }
 
   String getDescription(){
@@ -51,9 +51,9 @@ class ToDoManager {
   // Method untuk menginisialisasi list ToDo
   void initTodos() {
     _todos = [
-      ToDo(id: '01', todoText: 'Morning Exercise', description: "", isDone: true),
-      ToDo(id: '02', todoText: 'Buy Groceries', description: "", isDone: false),
-      ToDo(id: '03', todoText: 'Check Emails', description: "", isDone: true, isPriority: true),
+      ToDo(id: '01', todoText: 'Morning Exercise', description: "", isPriority: true),
+      ToDo(id: '02', todoText: 'Buy Groceries', description: "", isPriority: false),
+      ToDo(id: '03', todoText: 'Check Emails', description: "", isPriority: true),
     ];
   }
 
@@ -73,7 +73,7 @@ class ToDoManager {
   // Optional: Method untuk menampilkan detail setiap ToDo menggunakan for loop
   void printTodos() {
     for (var todo in _todos) {
-      print('Id: ${todo.id}, Task: ${todo.todoText}, Completed: ${todo.isDone}');
+      print('Id: ${todo.id}, Task: ${todo.todoText}, Completed: ${todo.isPriority}');
     }
   }
   
@@ -88,7 +88,7 @@ void main() {
   
   // Menambahkan ToDo baru
   manager.addTodo(
-    ToDo(id: '04', todoText: 'New Task', description: "Description baru", isDone: false)
+    ToDo(id: '04', todoText: 'New Task', description: "Description baru", isPriority: false)
   );
   
   // Mengembalikan dan menampilkan list ToDo

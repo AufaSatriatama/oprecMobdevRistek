@@ -41,7 +41,7 @@ class ToDoItem extends StatelessWidget {
         tileColor: Colors.white,
         
         //leading: Icon(
-        //  todo.isDone ? Icons.check_box : Icons.check_box_outline_blank,
+        //  todo.isPriority ? Icons.check_box : Icons.check_box_outline_blank,
           
           
         //),
@@ -54,7 +54,7 @@ class ToDoItem extends StatelessWidget {
             fontSize: 16,
             
             color: Colors.black,
-            //decoration: todo.isDone ? TextDecoration.lineThrough : null,
+            //decoration: todo.isPriority ? TextDecoration.lineThrough : null,
           ),
         ),
         trailing: Container(
@@ -67,7 +67,7 @@ class ToDoItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(5),
           ),
           child: Icon(
-            todo.isDone ? Icons.radio_button_on : Icons.radio_button_off,
+            todo.isPriority ? Icons.radio_button_on : Icons.radio_button_off,
             color: Color(0xFF4B49AC),
           ),
            
